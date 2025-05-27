@@ -1,6 +1,7 @@
 import './App.css'
 import Header from './Components/Header'
 import SpecificProduc from './Components/SpecificProduct'
+import {Toaster} from 'react-hot-toast'
 
 function App() {
   
@@ -8,6 +9,8 @@ function App() {
     <>
       <Header />
       <SpecificProduc />
+
+      <Toaster position='bottom-center' />
     </>
   )
 }
