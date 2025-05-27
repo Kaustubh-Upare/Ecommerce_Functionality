@@ -17,7 +17,6 @@ import {
   Popover,
   Tooltip
 } from "@mui/material";
-import AntiqueImage from '../assets/Antique.jpeg';
 import DarkMaroon from '../assets/DarkMaroon.jpeg';
 import BeigeImage from '../assets/BeigeShirt.jpeg';
 import BlackImage from '../assets/Black.jpeg';
