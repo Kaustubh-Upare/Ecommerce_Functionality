@@ -46,14 +46,13 @@ const SpecificProduct = () => {
   const [selectedSize, setSelectedSize] = useState('');
   const {cart,setCart}=useContext(CartContext);
   const [zoomVisible,setZoomVisible]=useState(true);
-  const [zoomPosition,setZoomPosition]=useState({x:0,y:0});
+  const [zoomPosition,setZoomPosition]=useState({x:null,y:null});
   const [previewImage, setPreviewImage] = useState(BeigeImage);
   const [defaultImage,setDefaultImage]=useState(BeigeImage)
   const [user, setUser] = useState(()=>{
     const savedUser = localStorage.getItem('user');
     return savedUser ? JSON.parse(savedUser) : null;
   })
-  const imageRef=useRef();
 
   useEffect(()=>{
       localStorage.setItem('cart',JSON.stringify(cart));
@@ -125,15 +124,15 @@ const SpecificProduct = () => {
   }
 
   const handleImageMouseHover=(e)=>{
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - left;
-    const y = e.clientY - top;
-    setZoomPosition({ x, y });
-
-    // const bounds=imageRef.current.getBoundingClientRect();
-    //  const x = ((e.clientX - bounds.left) / bounds.width) * 100;
-    // const y = ((e.clientY - bounds.top) / bounds.height) * 100;
+    // const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    // const x = e.clientX - left;
+    // const y = e.clientY - top;
     // setZoomPosition({ x, y });
+const rect = e.currentTarget.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  setZoomPosition({ x, y });
+    
   }
 
   return (
@@ -165,14 +164,14 @@ const SpecificProduct = () => {
     }}
   />
   {/* Dotted Box */}
-  {zoomVisible && (
+  {zoomVisible && zoomPosition.x !== null && (
     <Box
       sx={{
         position: "absolute",
         top: zoomPosition.y - 50,
         left: zoomPosition.x - 50,
-        width: 100,
-        height: 100,
+        width: 160,
+        height: 160,
         border: "2px dotted rgba(11, 160, 230, 0.7)",
         pointerEvents: "none",
         zIndex: 10,
@@ -208,7 +207,7 @@ const SpecificProduct = () => {
 
         {/* Right Section - Product Details */}
         <Grid size={{xs:12,md:6}} sx={{position:'relative'}}>
-          {zoomVisible && (
+          {zoomVisible && zoomPosition.x !== null && (
   <Box
     sx={{
       position: "absolute",
