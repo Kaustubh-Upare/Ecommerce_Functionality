@@ -1,5 +1,5 @@
+import { Check, ShoppingCart } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
   Card,
@@ -13,17 +13,15 @@ import {
   ListItemText,
   Paper,
   Rating,
-  Typography,
-  Popover,
-  Tooltip
+  Tooltip,
+  Typography
 } from "@mui/material";
-import DarkMaroon from '../assets/DarkMaroon.jpeg';
+import { useContext, useEffect, useRef, useState } from "react";
+import toast from "react-hot-toast";
 import BeigeImage from '../assets/BeigeShirt.jpeg';
 import BlackImage from '../assets/Black.jpeg';
 import DarkBlueImage from '../assets/DarkBlue.jpeg';
-import { useContext, useEffect, useRef, useState } from "react";
-import { Check, ShoppingCart } from '@mui/icons-material';
-import toast from "react-hot-toast";
+import DarkMaroon from '../assets/DarkMaroon.jpeg';
 import { CartContext } from "./CartProvider";
 
 const productVariants = [

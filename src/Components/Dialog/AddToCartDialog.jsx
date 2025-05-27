@@ -1,3 +1,4 @@
+import { Add, Close, Remove, ShoppingBag } from "@mui/icons-material";
 import {
   Box,
   Button,
@@ -8,7 +9,6 @@ import {
 } from "@mui/material";
 import React, { useContext } from "react";
 import { CartContext } from "../CartProvider";
-import { Add, Remove, Close, ShoppingCart, ShoppingBag } from "@mui/icons-material";
 
 const AddToCartDialog = ({ anchor, open, onCloseC }) => {
   const { cart: carty, setCart } = useContext(CartContext); // assuming setCart is available
