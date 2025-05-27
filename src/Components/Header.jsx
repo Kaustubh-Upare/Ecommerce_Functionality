@@ -1,5 +1,5 @@
-import {AppBar, Backdrop, Badge, Box, IconButton, Toolbar, Typography} from '@mui/material'
-import {Person, ShoppingCart} from '@mui/icons-material'
+import {AppBar, Backdrop, Badge, Box, IconButton, Toolbar, Tooltip, Typography} from '@mui/material'
+import {AccountCircle, Person, ShoppingCart} from '@mui/icons-material'
 import { lazy, Suspense, useContext, useEffect, useState } from 'react'
 import { CartContext } from './CartProvider'
 
@@ -22,20 +22,42 @@ const Header=()=>{
             </Suspense>
 
             <Toolbar sx={{bgcolor:'white'}} >
-                <Typography variant='h6' sx={{color:'black'}}>
-                    ShopMart
+               <Typography
+                        variant="h4"
+                        sx={{
+                            fontFamily: 'Playfair Display',
+                            fontWeight: 'bold',
+                            letterSpacing: 1.5,
+                            color: 'rgb(190, 2, 181)',
+                            textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
+                        }}
+                        >
+                        ECom
+                        <Box
+                            component="span"
+                            sx={{
+                            color: '#d32f2f', 
+                            fontFamily: 'Pacifico',
+                            ml: 0.5,
+                            }}
+                        >
+                            Mart
+                        </Box>
                 </Typography>
-
                 <Box sx={{marginLeft:'auto',paddingRight:{xs:'0.1rem',sm:'2rem'}}}>
+                    <Tooltip title={'Cart'}>
                     <Badge badgeContent={carty?.length} color='primary' >
-                    <IconButton color='warning' onClick={(e)=>handleAddToCart(e)} >
+                    <IconButton color='secondary' onClick={(e)=>handleAddToCart(e)} >
                         <ShoppingCart />
                     </IconButton>
                     </Badge>
+                    </Tooltip>
 
-                    <IconButton color='primary'>
-                        <Person/>
+                    <Tooltip title={'Account'}>
+                    <IconButton color='secondary'>
+                        <AccountCircle fontSize='inherit'/>
                     </IconButton>
+                    </Tooltip>
 
                 </Box>
 

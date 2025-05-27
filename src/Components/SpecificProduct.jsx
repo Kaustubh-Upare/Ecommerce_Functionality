@@ -14,7 +14,8 @@ import {
   Paper,
   Rating,
   Typography,
-  Popover
+  Popover,
+  Tooltip
 } from "@mui/material";
 import AntiqueImage from '../assets/Antique.jpeg';
 import DarkMaroon from '../assets/DarkMaroon.jpeg';
@@ -107,7 +108,7 @@ const SpecificProduct = () => {
     }
     const cartItem={
       id:Date.now(),
-      name:'Some Kind Of Shirt',
+      name:'H-Top Shirt',
       price:1299,
       size:selectedSize,
       color:selectedColor,
@@ -144,19 +145,44 @@ const SpecificProduct = () => {
       <Grid container spacing={4}>
         {/* Left Section - Images */}
         <Grid size={{xs:12,md:6}} >
-          <Paper sx={{ aspectRatio: "1/1", overflow: "hidden", borderRadius: 2 }}>
-            <Box
-              // ref={imageRef}
-              
-              component="img"
-              src={previewImage}
-              alt="Antique"
-              sx={{ width: "100%", height: "100%", objectFit: "contain",cursor:'crosshair' }}
-              onMouseEnter={()=>setZoomVisible(true)}
-              onMouseLeave={() => setZoomVisible(false)}
-              onMouseMove={(e)=>handleImageMouseHover(e)}
-            />
-          </Paper>
+          <Paper
+  sx={{
+    aspectRatio: "1/1",
+    overflow: "hidden",
+    borderRadius: 2,
+    position: "relative",
+  }}
+  onMouseEnter={() => setZoomVisible(true)}
+  onMouseLeave={() => setZoomVisible(false)}
+  onMouseMove={(e) => handleImageMouseHover(e)}
+>
+  <Box
+    component="img"
+    src={previewImage}
+    alt="Antique"
+    sx={{
+      width: "100%",
+      height: "100%",
+      objectFit: "contain",
+      cursor: "crosshair",
+    }}
+  />
+  {/* Dotted Box */}
+  {zoomVisible && (
+    <Box
+      sx={{
+        position: "absolute",
+        top: zoomPosition.y - 50,
+        left: zoomPosition.x - 50,
+        width: 100,
+        height: 100,
+        border: "2px dotted rgba(11, 160, 230, 0.7)",
+        pointerEvents: "none",
+        zIndex: 10,
+      }}
+    />
+  )}
+</Paper>
           {/* ------------------ */}
           
           
@@ -197,6 +223,7 @@ const SpecificProduct = () => {
       border: "1px solid #ccc",
       zIndex: 10,
       display: { xs: 'none', md: 'block' },
+      pointerEvents: "none",
       overflow: "hidden",
     }}
   >
@@ -205,8 +232,8 @@ const SpecificProduct = () => {
       src={previewImage}
       sx={{
         position: "absolute",
-        top: `${-zoomPosition.y * 1.5}px`,
-        left: `${-zoomPosition.x * 2.5}px`,
+        top: `${-zoomPosition.y}px`,
+        left: `${-zoomPosition.x }px`,
         width: "1200px",
         height: "1200px",
         objectFit: "contain",
@@ -217,7 +244,7 @@ const SpecificProduct = () => {
           <Box display="flex" flexDirection="column" gap={3} textAlign={'left'}>
             {/* Title & Rating */}
             <Box >
-              <Typography variant="h4" fontWeight="bold">H-Top TShirt</Typography>
+              <Typography variant="h4" fontWeight="bold">H-Top Shirt</Typography>
               <Box display="flex" alignItems="center" gap={1}>
                 <Rating value={4.2} precision={0.1} readOnly size="small" />
                 <Typography variant="body2" color="text.secondary">
@@ -240,10 +267,13 @@ const SpecificProduct = () => {
               <Typography variant="h6" gutterBottom>Color: {selectedColor || "Select Color"}</Typography>
               <Box display="flex" gap={2} flexWrap="wrap">
                 {productVariants.map((variant) => (
-                  <Box
+                  <Tooltip 
+                    key={variant.color} 
+                    title={variant.color}
+                    >
+                    <Box
                     onMouseEnter={()=>handleHover(variant.imk)}
                     onMouseLeave={resetImage}
-                    key={variant.color}
                     onClick={() => ImageSelectionHandler(variant)}
                     sx={{
                       cursor: 'pointer',
@@ -254,6 +284,7 @@ const SpecificProduct = () => {
                       backgroundColor: variant.color,
                     }}
                   />
+                  </Tooltip>
                 ))}
               </Box>
             </Box>
@@ -263,17 +294,17 @@ const SpecificProduct = () => {
               <Typography variant="h6" gutterBottom>Size: {selectedSize || "Select Size"}</Typography>
               <Grid container spacing={1}>
                 {productVariants.map((variant) => (
-                  <Grid  size={3}  key={variant.size}>
+                  <Box key={variant.size} display={'flex'} flexWrap={"wrap"}>
                     <Button
-                      fullWidth
                       variant={selectedSize === variant.size ? "contained" : "outlined"}
-                      color="warning"
-                      sx={{ height: 48 }}
+                      
+                      sx={{ height: 48,color:'black',bgcolor:'rgb(247, 247, 247)',border:'0.8px solid rgb(196, 196, 196)' }}
                       onClick={() => setSelectedSize(variant.size)}
+                      
                     >
                       {variant.size}
                     </Button>
-                  </Grid>
+                  </Box>
                 ))}
               </Grid>
             </Box>
@@ -288,8 +319,9 @@ const SpecificProduct = () => {
                 variant="contained"
                 size="large"
                 startIcon={<ShoppingCart />}
-                sx={{ flex: 1, bgcolor: 'rgb(34, 34, 34)' }}
+                sx={{ flex: 1, bgcolor: 'rgb(5, 3, 29)',fontFamily:'Roboto',fontSize:'12px' }}
                 onClick={(e)=>addToCart(e)}
+
               >
                 Add To Cart
               </Button>
